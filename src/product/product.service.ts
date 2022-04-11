@@ -21,6 +21,8 @@ export class ProductService{
     }
 
     async productUpdate(productId : string, partialData : Partial<ProductDto>): Promise<any>{
+        console.log(partialData);
+        
         return await this.productRepository.update({productId}, partialData )
     }
 

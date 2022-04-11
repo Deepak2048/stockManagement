@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { productModule } from './product/product.module';
 import { Product } from './product/productEntity/product.entity';
+import { purchaseModule } from './purchase/purchase.module';
+import { Purchase } from './purchase/purchaseEntity/purchase.Entity';
 
 import { salesModule } from './sales/sales.module';
 import { Sales } from './sales/salesEntity/sales.entity';
@@ -18,10 +20,10 @@ import { Sales } from './sales/salesEntity/sales.entity';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
-      entities: [Sales, Product],
+      entities: [Sales, Product, Purchase],
       synchronize: true,
     }),
-    salesModule,productModule
+    salesModule,productModule,purchaseModule
 
   ]
 })

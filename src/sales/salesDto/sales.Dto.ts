@@ -4,9 +4,17 @@ export class SalesDto{
     id : number;
     productId : string;
     productName : string;
-    productQuantity : number;
+    salesQuantity : number;
     salesPrice : number;
-    salesOn : Date;
-    updatedOn : Date
+    salesOn : Date
    
+}
+
+export class UpdateSalesDto {
+    id : number;
+    productId : string;
+    productName : string;
+    salesQuantity : number;
+    salesPrice : number;
+    updatedOn : Date
 }

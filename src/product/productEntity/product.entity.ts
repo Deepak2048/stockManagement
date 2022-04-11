@@ -1,11 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { BeforeInsert, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 
 @Entity()
 export class Product{
     @PrimaryGeneratedColumn()
     id : number;
     
-    @Column()
+    @PrimaryColumn({unique:true})
     productId : string;
 
     @Column()
@@ -17,8 +17,11 @@ export class Product{
     @Column()
     productPrice : number;
 
-    @Column({type : Date, nullable:true})
-    createdOn : Timestamp;
+    @Column({type :  'timestamp with time zone', nullable:true})
+    createdOn : Date;
+
+    @BeforeInsert()
+
 
     @Column({type : Date, nullable:true})
     updatedOn : Timestamp

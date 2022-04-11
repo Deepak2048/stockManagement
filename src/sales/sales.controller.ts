@@ -1,6 +1,8 @@
 import { Body, Controller,  Delete,  Get,  HttpStatus, Param, Post, Put } from "@nestjs/common";
+import { ProductDto } from "src/product/productDto/product.dto";
+import { Product } from "src/product/productEntity/product.entity";
 import { SalesService } from "../sales/sales.service";
-import { SalesDto } from "./salesDto/sales.Dto";
+import { SalesDto, UpdateSalesDto } from "./salesDto/sales.Dto";
 import { Sales } from "./salesEntity/sales.entity";
 
 @Controller('sales')
@@ -40,7 +42,7 @@ export class SalesController{
     }
 
     @Put(':productId')
-    async updateSales(@Param('productId') productId : string,@Body() updateData : Partial<SalesDto>){
+    async updateSales(@Param('productId') productId : string,@Body() updateData : UpdateSalesDto, productData: Product){
         const updatedData = await this.salesService.update(productId, updateData);
         return {
             message : " Sales data updated successfully by productId",

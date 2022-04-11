@@ -1,26 +1,27 @@
-import { Column, Entity, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Sales{
     @PrimaryGeneratedColumn()
     id : number;
 
-    @Column()
+    @PrimaryColumn({unique:true})
     productId : string;
 
     @Column()
     productName : string;
 
-    @Column()
-    productQuantity : number;
+    @Column({ nullable: false, type: 'integer', default: 1 })
+    salesQuantity : number;
 
-    @Column()
+    @Column({ nullable: false, type: 'numeric' })
     salesPrice : number;
 
-    @Column({type: 'timestamp', nullable: true})
+    @Column({ nullable: true, type: 'timestamp with time zone' })
     salesOn : Date;
 
-    @Column({type: 'timestamp', nullable: true})
+
+    @Column({type: 'timestamp with time zone', nullable: true})
     updatedOn : Date;
     
 }
