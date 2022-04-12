@@ -29,8 +29,9 @@ export class PurchaseService{
         return await this.purchaseRepository.findOne({purchaseId:purchaseId})
     }
 
-    async updatePurchase(purchaseId : string, updateDto:UpdatePurchaseDto) : Promise<Purchase>{
-        const purchaseInput : Purchase = await this.purchaseRepository.findOne(purchaseId)
+    async updatePurchase(purchaseId : string, updateDto : UpdatePurchaseDto) : Promise<Purchase>{
+        const purchaseInput : Purchase = await this.purchaseRepository.findOne({purchaseId : purchaseId})
+        
         purchaseInput.purchaseId = updateDto.purchaseId;
         purchaseInput.productName = updateDto.productName;
         purchaseInput.purchaseQuantity = updateDto.purchaseQuantity;
