@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Sales{
@@ -20,8 +20,11 @@ export class Sales{
     @Column({ nullable: true, type: 'timestamp with time zone' })
     salesOn : Date;
 
-
     @Column({type: 'timestamp with time zone', nullable: true})
     updatedOn : Date;
     
+    @ManyToOne(() => Sales)
+    @JoinColumn()
+    sales : Sales;
+
 }

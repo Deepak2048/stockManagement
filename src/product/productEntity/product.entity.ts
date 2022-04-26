@@ -1,4 +1,5 @@
-import { BeforeInsert, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { Purchase } from "src/purchase/purchaseEntity/purchase.Entity";
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 
 @Entity()
 export class Product{
@@ -21,5 +22,10 @@ export class Product{
     createdOn : Date;
 
     @Column({type : Date, nullable:true})
-    updatedOn : Timestamp
+    updatedOn : Timestamp;
+
+    @ManyToMany(() => Product , (purchase) => purchase.product , {cascade: ["insert","update"]})
+    @JoinColumn()
+    purchase : Purchase[]
+    product: any;
 }
