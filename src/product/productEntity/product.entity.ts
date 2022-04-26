@@ -20,9 +20,6 @@ export class Product{
     @Column({type :  'timestamp with time zone', nullable:true})
     createdOn : Date;
 
-    @BeforeInsert()
-
-
     @Column({type : Date, nullable:true})
     updatedOn : Timestamp
 }

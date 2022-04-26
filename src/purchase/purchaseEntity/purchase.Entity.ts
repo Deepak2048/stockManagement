@@ -20,6 +20,6 @@ export class Purchase {
     @Column({type:'timestamp with time zone', nullable:false})
     purchaseOn : Date;
 
-    // @Column({type:'timestamp with time zone', nullable:false})
-    // updatedOn : Date
+    @Column({type:'timestamp with time zone', nullable:true})
+    updatedOn : Date
 }

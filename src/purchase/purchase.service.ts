@@ -36,7 +36,8 @@ export class PurchaseService{
         purchaseInput.productName = updateDto.productName;
         purchaseInput.purchaseQuantity = updateDto.purchaseQuantity;
         purchaseInput.purchasePrice = updateDto.purchasePrice;
-        purchaseInput.purchaseOn = new Date()
+        purchaseInput.purchaseOn = new Date();
+        purchaseInput.updatedOn = new Date()
 
         this.purchaseRepository.save(purchaseInput)
         return purchaseInput;
