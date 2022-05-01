@@ -8,8 +8,15 @@ import { Product } from "./productEntity/product.entity";
 export class ProductService{
     constructor(@InjectRepository(Product) private productRepository : Repository<Product>) {}
 
-    async createProduct(productDto : ProductDto):Promise<ProductDto> {
-        return await this.productRepository.save(productDto);
+    async createProduct(productDto : ProductDto):Promise<any> {
+        const productIteam : Product = await this.productRepository.create({
+            productId: productDto.productId,
+            productName: productDto.productName,
+            quantity: productDto.quantity,
+            price: productDto.price,
+            createdOn: new Date()
+        });
+        return  this.productRepository.save(productIteam);
     }
 
     async findAllProduct() : Promise<ProductDto[]>{

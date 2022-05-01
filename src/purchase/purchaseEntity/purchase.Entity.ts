@@ -1,23 +1,23 @@
 import { productModule } from "src/product/product.module";
 import { Product } from "src/product/productEntity/product.entity";
-import { Column, Entity, JoinColumn, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Purchase {
     @PrimaryGeneratedColumn()
-    id : number;
-
-    @Column({unique:true})
     purchaseId : string;
 
     @Column()
     productName : string;
 
     @Column({type:"integer"})
-    purchaseQuantity : number;
+    quantity : number;
 
     @Column({type:"numeric"})
-    purchasePrice : number;
+    price : number;
+
+    
+    productId : string;
 
     @Column({type:'timestamp with time zone', nullable:false})
     purchaseOn : Date;

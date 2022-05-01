@@ -1,6 +1,5 @@
 import { Body, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ProductDto } from "src/product/productDto/product.dto";
 import { Product } from "src/product/productEntity/product.entity";
 import { Repository } from "typeorm";
 import { SalesDto, UpdateSalesDto } from "./salesDto/sales.Dto";
@@ -8,16 +7,30 @@ import { Sales } from "./salesEntity/sales.entity";
 
 @Injectable()
 export class SalesService{
-    constructor (@InjectRepository(Sales) private salesRepository : Repository<Sales>) {}
+    constructor (
+        @InjectRepository(Product) private productRepository : Repository<Product>,
+        @InjectRepository(Sales) private salesRepository : Repository<Sales>
+        
+    ) {}
 
-    async create(salesData : SalesDto):Promise<Sales>{
+    async create(salesData : SalesDto):Promise<any>{
         const salesInput :Sales = this.salesRepository.create({
             productId:salesData.productId,
             productName: salesData.productName,
-            salesQuantity:salesData.salesQuantity,
-            salesPrice: salesData.salesPrice,
+            quantity:salesData.quantity,
+            price: salesData.price,
             salesOn: new Date()
-        })
+        });
+
+        const productData = await this.productRepository.findOne(salesData.productId);
+        console.log(productData.productId);
+        console.log(productData.productId == salesData.productId);
+        
+        if(productData.productId == salesData.productId){
+            productData.quantity = productData.quantity + salesData.quantity;
+            console.log(productData.quantity);
+            await this.productRepository.save(productData)
+        }
         
          
          return await this.salesRepository.save(salesInput);;
@@ -36,8 +49,8 @@ export class SalesService{
          const salesInput: Sales = await this.salesRepository.findOne(productId);
          salesInput.productId = updateData.productId;
          salesInput.productName = updateData.productName;
-         salesInput.salesQuantity = updateData.salesQuantity;
-         salesInput.salesPrice = updateData.salesPrice;
+         salesInput.quantity = updateData.quantity;
+         salesInput.price = updateData.price;
          salesInput.updatedOn = new Date()
          this.salesRepository.save(salesInput)
          

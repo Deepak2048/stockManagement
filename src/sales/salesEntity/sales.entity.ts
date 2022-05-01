@@ -3,19 +3,16 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedC
 @Entity()
 export class Sales{
     @PrimaryGeneratedColumn()
-    id : number;
-
-    @PrimaryColumn({unique:true})
     productId : string;
 
     @Column()
     productName : string;
 
-    @Column({ nullable: false, type: 'integer', default: 1 })
-    salesQuantity : number;
+    @Column({ nullable: false, type: 'integer', default: 0 })
+    quantity : number;
 
     @Column({ nullable: false, type: 'numeric' })
-    salesPrice : number;
+    price : number;
 
     @Column({ nullable: true, type: 'timestamp with time zone' })
     salesOn : Date;

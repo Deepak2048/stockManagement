@@ -1,20 +1,18 @@
 import { Timestamp } from "typeorm";
 
 export class SalesDto{
-    id : number;
     productId : string;
     productName : string;
-    salesQuantity : number;
-    salesPrice : number;
+    quantity : number;
+    price : number;
     salesOn : Date
    
 }
 
 export class UpdateSalesDto {
-    id : number;
     productId : string;
     productName : string;
-    salesQuantity : number;
-    salesPrice : number;
+    quantity : number;
+    price : number;
     updatedOn : Date
 }

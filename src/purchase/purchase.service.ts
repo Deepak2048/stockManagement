@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ProductDto } from "src/product/productDto/product.dto";
 import { Product } from "src/product/productEntity/product.entity";
 import { Repository } from "typeorm";
 import { PurchaseDto, UpdatePurchaseDto } from "./purchaseDto/purchase.Dto";
@@ -9,7 +10,7 @@ import { Purchase } from "./purchaseEntity/purchase.Entity";
 export class PurchaseService{
     constructor(
         @InjectRepository(Purchase) private purchaseRepository : Repository<Purchase>,
-        @InjectRepository(Product) private propductRepository : Repository<Product>
+        @InjectRepository(Product) private productRepository : Repository<Product>
     ) {}
     
 
@@ -17,15 +18,44 @@ export class PurchaseService{
         const purchaseIteam : Purchase = await this.purchaseRepository.create({
             purchaseId: purchaseDto.purchaseId,
             productName: purchaseDto.productName,
-            purchaseQuantity: purchaseDto.purchaseQuantity,
-            purchasePrice: purchaseDto.purchasePrice,
+            quantity: purchaseDto.quantity,
+            price: purchaseDto.price,
             purchaseOn: new Date()
         });
-        const productData = this.propductRepository.findOne(where:{productId:productId},{ relations: ['product'] })
-        // getProductData(productId : String) {
-        //     const productData = this.propductRepository.findOne({productId:productId})
-        // }
         
+        const productData = await this.productRepository.findOne(purchaseDto.purchaseId);
+        console.log(productData.productId);
+        console.log(productData.productId == purchaseDto.purchaseId);
+        
+        if(productData.productId == purchaseDto.purchaseId){
+            productData.quantity = productData.quantity + purchaseDto.quantity;
+            console.log(productData.quantity);
+            await this.productRepository.save(productData)
+        }else{
+            console.log("insert to product table");
+            (ProductDto);
+        (productDto : ProductDto)=>{
+            const productIteam : Product =  this.productRepository.create({
+                productId: productDto.productId,
+                productName: productDto.productName,
+                quantity: productDto.quantity,
+                price: productDto.price,
+                createdOn: new Date()
+            });
+            return  this.productRepository.save(productIteam);
+        }
+        
+        //     (productDto:ProductDto) =>{const productIteam : Product = await this.productRepository.create({
+        //         productId: productDto.productId,
+        //         productName: productDto.productName,
+        //         quantity: productDto.quantity,
+        //         price: productDto.price,
+        //         purchaseOn: new Date()
+        //     });
+        //     await this.productRepository.save(productIteam)
+        // }
+            
+        }
 
         this.purchaseRepository.save(purchaseIteam)
         return purchaseIteam;
@@ -44,8 +74,8 @@ export class PurchaseService{
         
         purchaseInput.purchaseId = updateDto.purchaseId;
         purchaseInput.productName = updateDto.productName;
-        purchaseInput.purchaseQuantity = updateDto.purchaseQuantity;
-        purchaseInput.purchasePrice = updateDto.purchasePrice;
+        purchaseInput.quantity = updateDto.quantity;
+        purchaseInput.price = updateDto.price;
         purchaseInput.purchaseOn = new Date();
         purchaseInput.updatedOn = new Date()
 
